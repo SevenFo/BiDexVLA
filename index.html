@@ -109,7 +109,7 @@
               <div class="column has-text-centered">
                 <div class="publication-links">
                   <span class="link-block">
-                    <a href="static/pdfs/ICRA2026%20(1).pdf" target="_blank" rel="noopener"
+                    <a href="" target="_blank" rel="noopener"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                         <i class="fas fa-file-pdf"></i>
@@ -144,10 +144,10 @@
     <!-- End teaser video -->
 
     <!-- Paper abstract -->
-    <section class="section hero is-light">
+    <section class="section hero is-light" id="abstract">
       <div class="container is-max-desktop">
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
+        <div class="abstract-card">
+          <div class="abstract-text">
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
@@ -167,6 +167,10 @@
               </p>
             </div>
           </div>
+          <figure class="abstract-figure">
+            <img src="static/images/fig1.png" alt="BiDexVLA teaser illustration" loading="lazy">
+            <figcaption>Teaser illustration highlighting BiDexVLA&rsquo;s autonomous pre-grasp and dexterous execution.</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -179,26 +183,18 @@
         <div class="container is-max-desktop">
           <h2 class="title is-3">Method Overview</h2>
           <div class="content has-text-justified">
-            <p>BiDexVLA couples a fast model-based grasp generator with a vision-language-action controller to execute reliable bimanual grasps. Figure&nbsp;1 summarises the overall hybrid framework, where coarse planning produces a coordinated pre-grasp pose and a learned policy refines the motion in real time.</p>
+            <p>BiDexVLA adopts a two-stage hybrid design: a model-based dexterous grasp generator proposes a coordinated bimanual pre-grasp, and a Vision-Language-Action (VLA) controller executes the motion with closed-loop feedback. The pipeline in Figure&nbsp;1 of the paper highlights how sensing, grasp synthesis, and policy control interact within this workflow.</p>
           </div>
           <figure class="method-figure">
-            <img src="static/images/fig1.png" alt="BiDexVLA hybrid framework" loading="lazy">
-            <figcaption>Figure&nbsp;1: High-level overview of BiDexVLA, combining model-based grasp synthesis with VLA-based low-level control.</figcaption>
+            <img src="static/images/fig2.png" alt="Two-stage BiDexVLA pipeline" loading="lazy">
+            <figcaption>Overall BiDexVLA workflow combining model-based grasp generation with VLA-driven execution.</figcaption>
           </figure>
           <div class="content has-text-justified">
-            <p>Stage&nbsp;1 (Figure&nbsp;2) samples feasible hand poses, selects grasp types, and moves the humanoid to a stable pre-grasp configuration. This optimisation layer accounts for reachability, collision-free motion, and object geometry to establish a reliable starting pose for both hands.</p>
+            <p><strong>Stage&nbsp;1 — Model-based dexterous grasp generation.</strong> The robot reconstructs an accurate point cloud using stereo depth, Qwen-2.5-VL semantics, and SAM segmentation. It samples two-finger grasp candidates, maps them through dexterous grasp templates for each hand, and scores them for reachability, collision avoidance, and grasp quality before moving to the selected pre-grasp pose.</p>
           </div>
-          <figure class="method-figure">
-            <img src="static/images/fig2.png" alt="Two-stage grasp planning and execution" loading="lazy">
-            <figcaption>Figure&nbsp;2: The two-stage pipeline first plans a pre-grasp pose and then transfers control to the reactive VLA policy.</figcaption>
-          </figure>
           <div class="content has-text-justified">
-            <p>Stage&nbsp;2 (Figure&nbsp;3) employs a hierarchical observation encoder and VLA controller that conditions on RGB-D, proprioception, and task text. The controller synchronises finger motions, adapts to object compliance, and provides the dexterous precision needed for successful bimanual grasps.</p>
+            <p><strong>Stage&nbsp;2 — VLA-based low-level controller.</strong> Multimodal observations (RGB views, point clouds, joint states, and force feedback) pass through a hierarchical encoder to produce observation tokens. A CVAE predictor generates fast action chunks, and a flow-matching refiner corrects them, enabling responsive, robust execution during teleoperation hand-off and autonomous runs.</p>
           </div>
-          <figure class="method-figure">
-            <img src="static/images/fig3.png" alt="Dexterous grasp generation module" loading="lazy">
-            <figcaption>Figure&nbsp;3: The dexterous grasp generation module integrates visual and proprioceptive feedback to command both hands.</figcaption>
-          </figure>
         </div>
       </div>
     </section>
